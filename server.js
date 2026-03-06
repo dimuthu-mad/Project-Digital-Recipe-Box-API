@@ -39,3 +39,15 @@ app.post("/recipes", (req, res) => {
   recipes.push(newRecipe);
   res.json({ message: "Recipe added successfully", Recipe: newRecipe });
 });
+
+app.put("/recipes/:id", (req, res) => {
+  const recipePutId = parseInt(req.params.id);
+  const selectPutRecipe = recipes.find((element) => element.id === recipePutId);
+  if (!selectPutRecipe) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+  selectPutRecipe.name = req.body.name || selectPutRecipe.name;
+  selectPutRecipe.cuisine = req.body.cuisine || selectPutRecipe.cuisine;
+  selectPutRecipe.prepTime = req.body.prepTime || selectPutRecipe.prepTime;
+  res.json({ message: "Recipe updated successfully", Recipe: selectPutRecipe });
+});
