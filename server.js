@@ -19,3 +19,12 @@ const recipes = [
 app.get("/recipes", (req, res) => {
   res.json(recipes);
 });
+
+app.get("/recipes/:id", (req, res) => {
+  const receipID = parseInt(req.params.id);
+  const selectRecipe = recipes.find((element) => element.id === receipID);
+  if (!selectRecipe) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+  res.json(selectRecipe);
+});
