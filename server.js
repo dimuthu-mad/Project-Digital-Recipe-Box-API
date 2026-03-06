@@ -28,3 +28,14 @@ app.get("/recipes/:id", (req, res) => {
   }
   res.json(selectRecipe);
 });
+
+app.post("/recipes", (req, res) => {
+  const newRecipe = {
+    id: recipes.length + 1,
+    name: req.body.name,
+    cuisine: req.body.cuisine,
+    prepTime: req.body.prepTime,
+  };
+  recipes.push(newRecipe);
+  res.json({ message: "Recipe added successfully", Recipe: newRecipe });
+});
