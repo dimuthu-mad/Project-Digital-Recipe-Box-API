@@ -10,7 +10,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
 
-const recipes = [
+let recipes = [
   { id: 1, name: "Classic Pancakes", cuisine: "American", prepTime: "15 mins" },
   { id: 2, name: "Spaghetti Calbora", cuisine: "Italian", prepTime: "20 mins" },
   { id: 3, name: "Guacamelo", cuisine: "Mexican", prepTime: "25 mins" },
@@ -50,4 +50,16 @@ app.put("/recipes/:id", (req, res) => {
   selectPutRecipe.cuisine = req.body.cuisine || selectPutRecipe.cuisine;
   selectPutRecipe.prepTime = req.body.prepTime || selectPutRecipe.prepTime;
   res.json({ message: "Recipe updated successfully", Recipe: selectPutRecipe });
+});
+
+app.delete("/recipes/:id", (req, res) => {
+  const dltId = parseInt(req.params.id);
+  recipes = recipes.filter((element) => element.id !== dltId);
+  if (!recipes) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+  res.json({
+    message: "Recipe deleted successfully",
+    Recipe: recipes,
+  });
 });
